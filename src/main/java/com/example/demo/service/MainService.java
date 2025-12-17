@@ -17,6 +17,9 @@ public class MainService {
     }
 
     public void addUser(User user) {
+        if (repository.existsByUsername(user.getUsername())) {
+            throw new IllegalArgumentException("Username already exists");
+        }
         user.setPassword(encoder.encode(user.getPassword()));
 
         user.setRole("ROLE_USER");
