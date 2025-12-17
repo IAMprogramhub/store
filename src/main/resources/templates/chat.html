@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Chat</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #f0f2f5;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+
+
+        .chat-container {
+            background: #fff;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            padding: 15px;
+            margin-top: 0px;
+            width: 100%;
+
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Окно сообщений */
+        .chat-box {
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 10px;
+            height: 300px;
+            overflow-y: auto;
+            background: #f9f9f9;
+            margin-bottom: 10px;
+        }
+
+        .message {
+            margin-bottom: 8px;
+            padding: 8px 12px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #e0f7fa, #b2ebf2);
+            color: #333;
+            word-wrap: break-word;
+        }
+
+        /* Форма отправки */
+        form {
+            display: flex;
+            gap: 10px;
+        }
+
+        input[type="text"] {
+            flex: 1;
+            padding: 10px 12px;
+            border-radius: 10px;
+            border: 1px solid #ccc;
+            font-size: 1rem;
+        }
+
+        button {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 10px;
+            background: #00bcd4;
+            color: white;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        button:hover {
+            background: #0097a7;
+        }
+
+        /* Адаптив для маленьких экранов */
+        @media (max-width: 500px) {
+            .chat-container {
+                width: 95%;
+                padding: 10px;
+            }
+
+            .chat-box {
+                height: 250px;
+            }
+
+            input[type="text"], button {
+                font-size: 0.9rem;
+                padding: 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="chat-container">
+    <h2>Chat</h2>
+    <div class="chat-box">
+        <ul>
+            <th:block th:each="m : ${messages}">
+                <li class="message" th:text="${m.text}"></li>
+            </th:block>
+        </ul>
+    </div>
+
+    <form action="/send" method="post">
+        <input type="text" name="msg" placeholder="Введите сообщение" required>
+        <button type="submit">Отправить</button>
+    </form>
+</div>
+
+<script>
+    // Автоскролл вниз при загрузке страницы
+    const chatBox = document.querySelector('.chat-box');
+    chatBox.scrollTop = chatBox.scrollHeight;
+</script>
+</body>
+</html>
